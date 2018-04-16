@@ -1,2 +1,0 @@
-# tradinganalytics
-Trading Analysis
