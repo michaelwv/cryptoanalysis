@@ -9,7 +9,7 @@ namespace TradingAnalytics.Application.Services
 {
     public class ChartServices
     {
-        public FileParameter GenerateOrderBookChartImage(OrderBookResponse orderBook, decimal baseAssetPriceInDollars, decimal quoteAssetPriceInDollars, int assetPrecision, TradeOpportunityDTO tradeOpportunity)
+        public FileParameter GenerateOrderBookChartImage(decimal quoteAssetPriceInDollars, TradeOpportunityDTO tradeOpportunity)
         {
             string html = "<html>" +
                         "   <head>" +
@@ -17,9 +17,9 @@ namespace TradingAnalytics.Application.Services
                         getStyle() +
                         "   </head>" +
                         "   <body>" +
-                        "       <div style='font-size: 18px;'>" + tradeOpportunity.BaseAsset + "-" + tradeOpportunity.QuoteAsset + " ($" + baseAssetPriceInDollars.ToString("0.00") + ")</div>" +
+                        "       <div style='font-size: 18px;'>" + tradeOpportunity.BaseAsset + "-" + tradeOpportunity.QuoteAsset + " ($" + tradeOpportunity.BaseAssetPriceInUsd.ToString("0.00") + ")</div>" +
                         "       <div style='font-size: 16px;'>BUY: " + tradeOpportunity.BuyPrice.ToString() + " - SELL: " + tradeOpportunity.SellPrice.ToString() + "</div>" +
-                        "       <div class='container'>" + GetBidsAsksHtml(orderBook.Asks, "sell", quoteAssetPriceInDollars, assetPrecision) + "<div class='separador'>&nbsp;</div>" + GetBidsAsksHtml(orderBook.Bids, "buy", quoteAssetPriceInDollars, assetPrecision) + "</div>" +
+                        "       <div class='container'>" + GetBidsAsksHtml(tradeOpportunity.OrderBook.Asks, "sell", quoteAssetPriceInDollars, tradeOpportunity.BaseAssetPrecision) + "<div class='separador'>&nbsp;</div>" + GetBidsAsksHtml(tradeOpportunity.OrderBook.Bids, "buy", quoteAssetPriceInDollars, tradeOpportunity.BaseAssetPrecision) + "</div>" +
                         "       </div>" +
                         "   </body>" +
                         "</html>";

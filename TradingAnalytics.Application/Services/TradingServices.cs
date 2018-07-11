@@ -1,12 +1,15 @@
 ﻿using BinanceExchange.API.Models.Response;
 using System;
+using System.Collections.Generic;
 using TradingAnalytics.Application.DTO;
+using TradingAnalytics.DataAccess;
+using TradingAnalytics.Domain.Entities;
 
 namespace TradingAnalytics.Application.Services
 {
     public class TradingServices
     {
-        public TradeOpportunityDTO GetTradeOpportunity(OrderBookResponse orderBook, decimal baseAssetPriceInDollars, decimal quoteAssetPriceInDollars, int assetPrecision, string baseAsset, string quoteAsset)
+        public TradeOpportunityDTO ValidateTradeOpportunity(OrderBookResponse orderBook, decimal lastBaseAssetPrice, decimal baseAssetPriceInDollars, decimal quoteAssetPriceInDollars, int assetPrecision, string baseAsset, string quoteAsset)
         {
             decimal buyPrice = GetBuyPrice(orderBook, assetPrecision, quoteAssetPriceInDollars);
 
@@ -23,11 +26,38 @@ namespace TradingAnalytics.Application.Services
                     SellPrice = sellPrice,
                     BaseAsset = baseAsset,
                     QuoteAsset = quoteAsset,
-                    BaseAssetPriceInUsd = baseAssetPriceInDollars
+                    LastBaseAssetPrice = lastBaseAssetPrice,
+                    BaseAssetPriceInUsd = baseAssetPriceInDollars,
+                    BaseAssetPrecision = assetPrecision,
+                    OrderBook = orderBook
                 };
             }
             else
                 return null;
+        }
+
+        public int UpdateOrderStatus(string clientOrderId, string side, string status, decimal lastPrice)
+        {
+            OrderRepository orderRepository = new OrderRepository();
+
+            return orderRepository.UpdateOrderStatus(clientOrderId, side, status, lastPrice);
+        }
+
+        public bool LowerWallStillExists(OrderBookResponse orderBook)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Order> GetOpenOrders()
+        {
+            OrderRepository orderRepository = new OrderRepository();
+
+            return orderRepository.GetOpenOrders();
+        }
+
+        public bool UpperWallFormedBeforeDesiredProfit(OrderBookResponse orderBook)
+        {
+            throw new NotImplementedException();
         }
 
         private decimal GetBuyPrice(OrderBookResponse orderBook, int assetPrecision, decimal quoteAssetPriceInDollars)
@@ -108,6 +138,9 @@ namespace TradingAnalytics.Application.Services
 
         internal decimal GetOrderQuantity(decimal priceInUsd)
         {
+            if (priceInUsd == 0)
+                priceInUsd = (decimal)0.01;
+
             decimal dollarsToInvest = 50;
             return dollarsToInvest / priceInUsd;
         }

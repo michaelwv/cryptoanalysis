@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.WebJobs;
 
-namespace TradingAnalytics.TradingProcess
+namespace TradingAnalytics.OpenOrdersChecking
 {
     // To learn more about Microsoft Azure WebJobs SDK, please see https://go.microsoft.com/fwlink/?LinkID=320976
     class Program

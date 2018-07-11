@@ -43,7 +43,7 @@ namespace TradingAnalytics.DataAccess
             return true;
         }
 
-        private bool CloseConnection()
+        public bool CloseConnection()
         {
             try
             {
@@ -106,14 +106,13 @@ namespace TradingAnalytics.DataAccess
 
                 List<MySqlParameter> param = new List<MySqlParameter>();
 
-                foreach (var item in arrParam)
-                    param.Add(new MySqlParameter(item.Key, item.Value));
+                if (arrParam != null)
+                    foreach (var item in arrParam)
+                        param.Add(new MySqlParameter(item.Key, item.Value));
 
                 mySqlCommand.Parameters.AddRange(param.ToArray());
 
                 var result = mySqlCommand.ExecuteReader();
-
-                CloseConnection();
 
                 return result;
             }
@@ -143,8 +142,9 @@ namespace TradingAnalytics.DataAccess
 
                 List<MySqlParameter> param = new List<MySqlParameter>();
 
-                foreach (var item in arrParam)
-                    param.Add(new MySqlParameter(item.Key, item.Value));
+                if (arrParam != null)
+                    foreach (var item in arrParam)
+                        param.Add(new MySqlParameter(item.Key, item.Value));
 
                 mySqlCommand.Parameters.AddRange(param.ToArray());
 
@@ -180,8 +180,9 @@ namespace TradingAnalytics.DataAccess
 
                 List<MySqlParameter> param = new List<MySqlParameter>();
 
-                foreach(var item in arrParam)
-                    param.Add(new MySqlParameter(item.Key, item.Value));
+                if (arrParam != null)
+                    foreach (var item in arrParam)
+                        param.Add(new MySqlParameter(item.Key, item.Value));
 
                 mySqlCommand.Parameters.AddRange(param.ToArray());
 

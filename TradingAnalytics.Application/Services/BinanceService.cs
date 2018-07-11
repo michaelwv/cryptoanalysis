@@ -3,7 +3,6 @@ using BinanceExchange.API.Enums;
 using BinanceExchange.API.Extensions;
 using BinanceExchange.API.Models.Request;
 using BinanceExchange.API.Models.Response;
-using BinanceExchange.API.Models.Response.Abstract;
 using log4net;
 using Newtonsoft.Json;
 using System;
@@ -50,6 +49,53 @@ namespace TradingAnalytics.Application.Services
             {
                 throw e;
             }
+        }
+
+        public void CancelOrder(string symbol, string clientOrderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<OrderResponse> GetOrder(string symbol, string clientOrderId)
+        {
+            try
+            {
+                var logger = LogManager.GetLogger(typeof(BinanceService));
+
+                SecurityDTO binanceKeys = SettingsService.GetBinanceKeys();
+
+                var client = new BinanceClient(new ClientConfiguration()
+                {
+                    ApiKey = binanceKeys.ApiKey,
+                    SecretKey = binanceKeys.SecretKey,
+                    Logger = logger,
+                });
+
+                OrderResponse order = await client.QueryOrder(new QueryOrderRequest()
+                {
+                    Symbol = symbol,
+                    OriginalClientOrderId = clientOrderId
+                });
+
+                if (order != null)
+                    return order;
+                else
+                    throw new Exception("Unexpected error when getting open order for symbol " + symbol + ".", null);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void SetSalesOrder(string symbol, decimal sellPrice)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateSellOrderUrderWall(string symbol, string clientOrderId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<OrderBookResponse> GetOrderBook(string symbol)
@@ -114,8 +160,9 @@ namespace TradingAnalytics.Application.Services
             try
             {
                 OrderRepository orderRepository = new OrderRepository();
+                string[] pendingStatus = new string[] { EnumExtensions.GetEnumMemberValue(OrderStatus.New), EnumExtensions.GetEnumMemberValue(OrderStatus.PartiallyFilled) };
 
-                if (orderRepository.OrderExists(tradeOpportunity.BaseAsset, tradeOpportunity.QuoteAsset, EnumExtensions.GetEnumMemberValue(OrderStatus.Filled), EnumExtensions.GetEnumMemberValue(OrderStatus.Filled)))
+                if (orderRepository.PendingOrderExists(tradeOpportunity.BaseAsset, tradeOpportunity.QuoteAsset, pendingStatus))
                     return false;
 
                 TradingServices tradingServices = new TradingServices();
@@ -156,7 +203,9 @@ namespace TradingAnalytics.Application.Services
                         BuyStatus = EnumExtensions.GetEnumMemberValue(OrderStatus.New),
                         //BuyClientOrderId = binanceResult.ClientOrderId,
                         BuyIncDate = DateTime.Now,
-                        SellPrice = tradeOpportunity.SellPrice
+                        SellPrice = tradeOpportunity.SellPrice,
+                        LastPrice = tradeOpportunity.LastBaseAssetPrice,
+                        LastPriceDate = DateTime.Now                        
                     };
 
                     if (orderRepository.CreateOrder(order) > 0)

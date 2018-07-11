@@ -15,5 +15,7 @@ namespace TradingAnalytics.Domain.Entities
         public string SellStatus { get; set; }
         public string SellClientOrderId { get; set; }
         public DateTime SellIncDate { get; set; }
+        public decimal LastPrice { get; set; }
+        public DateTime LastPriceDate { get; set; }
     }
 }
