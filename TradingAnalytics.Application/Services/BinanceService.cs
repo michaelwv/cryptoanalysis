@@ -20,10 +20,10 @@ namespace TradingAnalytics.Application.Services
     {
         public async Task<List<ExchangeInfoSymbol>> GetTradingCoins()
         {
+            var logger = LogManager.GetLogger(typeof(BinanceService));
+
             try
             {
-                var logger = LogManager.GetLogger(typeof(BinanceService));
-
                 SecurityDTO binanceKeys = SettingsService.GetBinanceKeys();
 
                 var client = new BinanceClient(new ClientConfiguration()
@@ -47,6 +47,7 @@ namespace TradingAnalytics.Application.Services
             }
             catch (Exception e)
             {
+                logger.Error(JsonConvert.SerializeObject(e));
                 throw e;
             }
         }
@@ -58,10 +59,10 @@ namespace TradingAnalytics.Application.Services
 
         public async Task<OrderResponse> GetOrder(string symbol, string clientOrderId)
         {
+            var logger = LogManager.GetLogger(typeof(BinanceService));
+
             try
             {
-                var logger = LogManager.GetLogger(typeof(BinanceService));
-
                 SecurityDTO binanceKeys = SettingsService.GetBinanceKeys();
 
                 var client = new BinanceClient(new ClientConfiguration()
@@ -84,6 +85,7 @@ namespace TradingAnalytics.Application.Services
             }
             catch (Exception e)
             {
+                logger.Error(JsonConvert.SerializeObject(e));
                 throw e;
             }
         }
@@ -100,10 +102,10 @@ namespace TradingAnalytics.Application.Services
 
         public async Task<OrderBookResponse> GetOrderBook(string symbol)
         {
+            var logger = LogManager.GetLogger(typeof(BinanceService));
+
             try
             {
-                var logger = LogManager.GetLogger(typeof(BinanceService));
-
                 SecurityDTO binanceKeys = SettingsService.GetBinanceKeys();
 
                 var client = new BinanceClient(new ClientConfiguration()
@@ -122,12 +124,44 @@ namespace TradingAnalytics.Application.Services
             }
             catch (Exception e)
             {
+                logger.Error(JsonConvert.SerializeObject(e));
+                throw e;
+            }
+        }
+
+        public async Task<SymbolPriceChangeTickerResponse> GetDailyTicker(string symbol)
+        {
+            var logger = LogManager.GetLogger(typeof(BinanceService));
+
+            try
+            {
+                SecurityDTO binanceKeys = SettingsService.GetBinanceKeys();
+
+                var client = new BinanceClient(new ClientConfiguration()
+                {
+                    ApiKey = binanceKeys.ApiKey,
+                    SecretKey = binanceKeys.SecretKey,
+                    Logger = logger,
+                });
+
+                SymbolPriceChangeTickerResponse dailyTicker = await client.GetDailyTicker(symbol);
+
+                if (dailyTicker != null)
+                    return dailyTicker;
+                else
+                    throw new Exception("Unexpected error when getting order book.", null);
+            }
+            catch (Exception e)
+            {
+                logger.Error(JsonConvert.SerializeObject(e));
                 throw e;
             }
         }
 
         public async Task<decimal> GetCurrentPrice(string symbol)
         {
+            var logger = LogManager.GetLogger(typeof(BinanceService));
+
             try
             {
                 using (var httpClient = new HttpClient())
@@ -151,12 +185,15 @@ namespace TradingAnalytics.Application.Services
             }
             catch (Exception e)
             {
+                logger.Error(JsonConvert.SerializeObject(e));
                 throw e;
             }
         }
 
         public /*async Task<*/bool/*>*/ SetNewOrder(TradeOpportunityDTO tradeOpportunity, OrderSide side, OrderType type)
         {
+            var logger = LogManager.GetLogger(typeof(BinanceService));
+
             try
             {
                 OrderRepository orderRepository = new OrderRepository();
@@ -167,7 +204,7 @@ namespace TradingAnalytics.Application.Services
 
                 TradingServices tradingServices = new TradingServices();
                 decimal price = (side == OrderSide.Buy) ? tradeOpportunity.BuyPrice : tradeOpportunity.SellPrice;
-                decimal quantity = tradingServices.GetOrderQuantity(tradeOpportunity.BaseAssetPriceInUsd);
+                decimal quantity = tradingServices.GetOrderQuantity(tradeOpportunity.BaseAssetPriceInUsd, tradeOpportunity.MinQty, tradeOpportunity.MaxQty);
 
                 if (quantity > 0)
                 {
@@ -198,18 +235,25 @@ namespace TradingAnalytics.Application.Services
                     {
                         BaseAsset = tradeOpportunity.BaseAsset,
                         QuoteAsset = tradeOpportunity.QuoteAsset,
+                        AssetPrecision = tradeOpportunity.BaseAssetPrecision,
                         Quantity = quantity,
                         BuyPrice = tradeOpportunity.BuyPrice,
                         BuyStatus = EnumExtensions.GetEnumMemberValue(OrderStatus.New),
                         //BuyClientOrderId = binanceResult.ClientOrderId,
                         BuyIncDate = DateTime.Now,
+                        QuoteAssetPriceAtBuy = tradeOpportunity.QuoteAssetPriceInUsd,
                         SellPrice = tradeOpportunity.SellPrice,
                         LastPrice = tradeOpportunity.LastBaseAssetPrice,
                         LastPriceDate = DateTime.Now                        
                     };
 
                     if (orderRepository.CreateOrder(order) > 0)
+                    {
+                        #if DEBUG
+                            orderRepository.UpdateClientOrderId();
+                        #endif
                         return true;
+                    }
                     else
                         throw new Exception("Unable to create new order.");
                     //}
@@ -221,6 +265,7 @@ namespace TradingAnalytics.Application.Services
             }
             catch (Exception e)
             {
+                logger.Debug(JsonConvert.SerializeObject(e));
                 throw e;
             }
         }

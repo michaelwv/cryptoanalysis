@@ -25,7 +25,16 @@ namespace TradingAnalytics.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mysql-cnhi.mysql.database.azure.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("tradinganalytics")]
+        public string DbName {
+            get {
+                return ((string)(this["DbName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
         public string DbServer {
             get {
                 return ((string)(this["DbServer"]));
@@ -34,7 +43,7 @@ namespace TradingAnalytics.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("michaelwv@mysql-cnhi")]
+        [global::System.Configuration.DefaultSettingValueAttribute("root")]
         public string DbUserId {
             get {
                 return ((string)(this["DbUserId"]));
@@ -43,19 +52,10 @@ namespace TradingAnalytics.DataAccess.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Ict@2018")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Michael@300168mwmw")]
         public string DbPassword {
             get {
                 return ((string)(this["DbPassword"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tradinganalytics")]
-        public string DbName {
-            get {
-                return ((string)(this["DbName"]));
             }
         }
     }

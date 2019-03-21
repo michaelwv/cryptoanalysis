@@ -1,21 +1,32 @@
-﻿using Microsoft.Azure.WebJobs;
+﻿using log4net;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TradingAnalytics.OpenOrdersChecking
 {
-    // To learn more about Microsoft Azure WebJobs SDK, please see https://go.microsoft.com/fwlink/?LinkID=320976
     class Program
     {
-        // Please set the following connection strings in app.config for this WebJob to run:
-        // AzureWebJobsDashboard and AzureWebJobsStorage
-        static void Main()
+        static void Main(string[] args)
         {
-            JobHostConfiguration config = new JobHostConfiguration();
+            log4net.Config.XmlConfigurator.Configure();
+            ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-            config.UseTimers();
+            Functions functions = new Functions();
 
-            var host = new JobHost(config);
+            Logger.Debug("Open Orders Checking console started.");
+            Console.WriteLine("Open Orders Checking console started.");
 
-            host.RunAndBlock();
+            while (1 == 1)
+            {
+                functions.CheckOpenOrders();
+                System.Threading.Thread.Sleep(30000);
+            }
+
+            //Logger.Debug("Open Orders Checking console finished.");
+            //Console.WriteLine("Open Orders Checking console finished.");
         }
     }
 }

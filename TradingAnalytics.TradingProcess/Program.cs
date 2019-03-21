@@ -1,21 +1,25 @@
-﻿using Microsoft.Azure.WebJobs;
+﻿using log4net;
+using System;
+using System.Collections.Generic;
 
 namespace TradingAnalytics.TradingProcess
 {
-    // To learn more about Microsoft Azure WebJobs SDK, please see https://go.microsoft.com/fwlink/?LinkID=320976
     class Program
     {
-        // Please set the following connection strings in app.config for this WebJob to run:
-        // AzureWebJobsDashboard and AzureWebJobsStorage
-        static void Main()
+        static void Main(string[] args)
         {
-            JobHostConfiguration config = new JobHostConfiguration();
+            log4net.Config.XmlConfigurator.Configure();
+            ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-            config.UseTimers();
+            Functions functions = new Functions();
 
-            var host = new JobHost(config);
+            Logger.Debug("Trading Process console started.");
 
-            host.RunAndBlock();
+            while (1 == 1)
+            {
+                functions.ProcessTrades();
+                System.Threading.Thread.Sleep(180000);
+            }
         }
     }
 }

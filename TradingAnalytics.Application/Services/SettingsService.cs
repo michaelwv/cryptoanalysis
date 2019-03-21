@@ -1,4 +1,5 @@
-﻿using TradingAnalytics.Application.DTO;
+﻿using System;
+using TradingAnalytics.Application.DTO;
 
 namespace TradingAnalytics.Application.Services
 {
@@ -52,5 +53,20 @@ namespace TradingAnalytics.Application.Services
         {
             return Properties.Settings.Default.LimitToProfit;
         }
-}
+
+        public static int GetRangeToFind()
+        {
+            return Properties.Settings.Default.RangeToFind;
+        }
+
+        public static decimal GetDollarsToInvest()
+        {
+            return Properties.Settings.Default.DollarsToInvest;
+        }
+
+        public static decimal GetCoinVolumeToConsider()
+        {
+            return Properties.Settings.Default.CoinVolumeToConsider;
+        }
+    }
 }

@@ -23,9 +23,19 @@ namespace TradingAnalytics.Web
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
+                        "~/Scripts/raphael.js",
+                        "~/Scripts/metisMenu.js",
+                        "~/Scripts/morris.js",
+                        "~/Scripts/morris-data.js",
+                        "~/Scripts/sb-admin-2.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/metisMenu.css",
+                      "~/Content/sb-admin-2.css",
+                      "~/Content/morris.css",
+                      "~/Content/font-awesome/css/font-awesome.css"));
         }
     }
 }

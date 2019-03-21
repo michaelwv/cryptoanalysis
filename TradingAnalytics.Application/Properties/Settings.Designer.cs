@@ -124,7 +124,7 @@ namespace TradingAnalytics.Application.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
         public decimal DesiredProfitPercentage {
             get {
                 return ((decimal)(this["DesiredProfitPercentage"]));
@@ -137,6 +137,33 @@ namespace TradingAnalytics.Application.Properties {
         public bool LimitToProfit {
             get {
                 return ((bool)(this["LimitToProfit"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int RangeToFind {
+            get {
+                return ((int)(this["RangeToFind"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        public decimal DollarsToInvest {
+            get {
+                return ((decimal)(this["DollarsToInvest"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public decimal CoinVolumeToConsider {
+            get {
+                return ((decimal)(this["CoinVolumeToConsider"]));
             }
         }
     }

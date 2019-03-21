@@ -21,9 +21,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{5C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingAnalytics.Application", "TradingAnalytics.Application\TradingAnalytics.Application.csproj", "{EA415F67-93FB-4C71-8590-1757D90B1377}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingAnalytics.TradingProcess", "TradingAnalytics.TradingProcess\TradingAnalytics.TradingProcess.csproj", "{CD8BAB65-FAC0-483E-B19B-FFA408F4E449}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingAnalytics.TradingProcessOld", "TradingAnalytics.TradingProcessOld\TradingAnalytics.TradingProcessOld.csproj", "{CD8BAB65-FAC0-483E-B19B-FFA408F4E449}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingAnalytics.OpenOrdersChecking", "TradingAnalytics.OpenOrdersChecking\TradingAnalytics.OpenOrdersChecking.csproj", "{5284D977-31DB-44C7-9A9F-19B49767781A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingAnalytics.OpenOrdersCheckingOld", "TradingAnalytics.OpenOrdersCheckingOld\TradingAnalytics.OpenOrdersCheckingOld.csproj", "{5284D977-31DB-44C7-9A9F-19B49767781A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consoles", "Consoles", "{19BC2CA1-D8AA-43C0-9100-4FB9EB1308C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingAnalytics.TradingProcess", "TradingAnalytics.TradingProcess\TradingAnalytics.TradingProcess.csproj", "{00B68144-BE89-424C-865C-C06566C0F85B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingAnalytics.OpenOrdersChecking", "TradingAnalytics.OpenOrdersChecking\TradingAnalytics.OpenOrdersChecking.csproj", "{AC87DA04-77DB-4AC1-9C4F-AA0D344DFE48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{3E077153-ED47-4D97-A5B0-8DECA2C328DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinanceExchange.API", "..\Binance\BinanceExchange.API\BinanceExchange.API.csproj", "{11BAC89D-A1C6-4935-A949-35AFC23D0661}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +65,18 @@ Global
 		{5284D977-31DB-44C7-9A9F-19B49767781A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5284D977-31DB-44C7-9A9F-19B49767781A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5284D977-31DB-44C7-9A9F-19B49767781A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00B68144-BE89-424C-865C-C06566C0F85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00B68144-BE89-424C-865C-C06566C0F85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00B68144-BE89-424C-865C-C06566C0F85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00B68144-BE89-424C-865C-C06566C0F85B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC87DA04-77DB-4AC1-9C4F-AA0D344DFE48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC87DA04-77DB-4AC1-9C4F-AA0D344DFE48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC87DA04-77DB-4AC1-9C4F-AA0D344DFE48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC87DA04-77DB-4AC1-9C4F-AA0D344DFE48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11BAC89D-A1C6-4935-A949-35AFC23D0661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11BAC89D-A1C6-4935-A949-35AFC23D0661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11BAC89D-A1C6-4935-A949-35AFC23D0661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11BAC89D-A1C6-4935-A949-35AFC23D0661}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +88,9 @@ Global
 		{EA415F67-93FB-4C71-8590-1757D90B1377} = {5CA4E28F-5E5F-4A3D-97B2-2097660C1777}
 		{CD8BAB65-FAC0-483E-B19B-FFA408F4E449} = {990C145E-1D38-4EC3-9DE1-CFF2DAFEA1C0}
 		{5284D977-31DB-44C7-9A9F-19B49767781A} = {990C145E-1D38-4EC3-9DE1-CFF2DAFEA1C0}
+		{00B68144-BE89-424C-865C-C06566C0F85B} = {19BC2CA1-D8AA-43C0-9100-4FB9EB1308C9}
+		{AC87DA04-77DB-4AC1-9C4F-AA0D344DFE48} = {19BC2CA1-D8AA-43C0-9100-4FB9EB1308C9}
+		{11BAC89D-A1C6-4935-A949-35AFC23D0661} = {3E077153-ED47-4D97-A5B0-8DECA2C328DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7687B732-2EA6-446A-9F2C-67175B2FA4BE}
